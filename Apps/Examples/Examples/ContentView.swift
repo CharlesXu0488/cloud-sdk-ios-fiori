@@ -10,10 +10,6 @@ struct ContentView: View {
                     Text("Charts")
                 }
                 NavigationLink(
-                    destination: IntegrationCardsContentView()) {
-                    Text("Integration Cards")
-                }
-                NavigationLink(
                     destination: CoreContentView()) {
                     Text("Core Elements")
                 }
