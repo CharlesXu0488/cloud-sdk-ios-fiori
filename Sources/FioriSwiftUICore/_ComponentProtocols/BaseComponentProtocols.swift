@@ -71,11 +71,17 @@ protocol _AvatarsComponent {
     var avatars: [TextOrIcon] { get }
 }
 
+// sourcery: BaseComponent
+protocol _IconComponent {
+    // sourcery: @ViewBuilder
+    var icon: Image? { get }
+}
+
 // TODO: rename to _ActionComponent after resolving the conflict.
 // sourcery: BaseComponent
-protocol _NewActionComponent {
+protocol _ActionComponent {
     // sourcery: @ViewBuilder
-    var newAction: FioriButton? { get }
+    var action: FioriButton? { get }
 }
 
 // sourcery: BaseComponent

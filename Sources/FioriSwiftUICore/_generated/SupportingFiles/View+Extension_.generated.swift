@@ -3,6 +3,23 @@
 import Foundation
 import SwiftUI
 
+// MARK: ActionStyle
+
+public extension View {
+    func actionStyle(_ style: some ActionStyle) -> some View {
+        self.transformEnvironment(\.actionStyleStack) { stack in
+            stack.append(style)
+        }
+    }
+    
+    func actionStyle(@ViewBuilder content: @escaping (ActionConfiguration) -> some View) -> some View {
+        self.transformEnvironment(\.actionStyleStack) { stack in
+            let style = AnyActionStyle(content)
+            stack.append(style)
+        }
+    }
+}
+
 // MARK: AvatarsStyle
 
 public extension View {
@@ -241,6 +258,23 @@ public extension View {
     }
 }
 
+// MARK: IconStyle
+
+public extension View {
+    func iconStyle(_ style: some IconStyle) -> some View {
+        self.transformEnvironment(\.iconStyleStack) { stack in
+            stack.append(style)
+        }
+    }
+    
+    func iconStyle(@ViewBuilder content: @escaping (IconConfiguration) -> some View) -> some View {
+        self.transformEnvironment(\.iconStyleStack) { stack in
+            let style = AnyIconStyle(content)
+            stack.append(style)
+        }
+    }
+}
+
 // MARK: IconsStyle
 
 public extension View {
@@ -253,6 +287,23 @@ public extension View {
     func iconsStyle(@ViewBuilder content: @escaping (IconsConfiguration) -> some View) -> some View {
         self.transformEnvironment(\.iconsStyleStack) { stack in
             let style = AnyIconsStyle(content)
+            stack.append(style)
+        }
+    }
+}
+
+// MARK: InformationViewStyle
+
+public extension View {
+    func informationViewStyle(_ style: some InformationViewStyle) -> some View {
+        self.transformEnvironment(\.informationViewStyleStack) { stack in
+            stack.append(style)
+        }
+    }
+    
+    func informationViewStyle(@ViewBuilder content: @escaping (InformationViewConfiguration) -> some View) -> some View {
+        self.transformEnvironment(\.informationViewStyleStack) { stack in
+            let style = AnyInformationViewStyle(content)
             stack.append(style)
         }
     }
@@ -275,35 +326,18 @@ public extension View {
     }
 }
 
-// MARK: NewActionStyle
+// MARK: ObjectItemStyle
 
 public extension View {
-    func newActionStyle(_ style: some NewActionStyle) -> some View {
-        self.transformEnvironment(\.newActionStyleStack) { stack in
+    func objectItemStyle(_ style: some ObjectItemStyle) -> some View {
+        self.transformEnvironment(\.objectItemStyleStack) { stack in
             stack.append(style)
         }
     }
     
-    func newActionStyle(@ViewBuilder content: @escaping (NewActionConfiguration) -> some View) -> some View {
-        self.transformEnvironment(\.newActionStyleStack) { stack in
-            let style = AnyNewActionStyle(content)
-            stack.append(style)
-        }
-    }
-}
-
-// MARK: NewObjectItemStyle
-
-public extension View {
-    func newObjectItemStyle(_ style: some NewObjectItemStyle) -> some View {
-        self.transformEnvironment(\.newObjectItemStyleStack) { stack in
-            stack.append(style)
-        }
-    }
-    
-    func newObjectItemStyle(@ViewBuilder content: @escaping (NewObjectItemConfiguration) -> some View) -> some View {
-        self.transformEnvironment(\.newObjectItemStyleStack) { stack in
-            let style = AnyNewObjectItemStyle(content)
+    func objectItemStyle(@ViewBuilder content: @escaping (ObjectItemConfiguration) -> some View) -> some View {
+        self.transformEnvironment(\.objectItemStyleStack) { stack in
+            let style = AnyObjectItemStyle(content)
             stack.append(style)
         }
     }

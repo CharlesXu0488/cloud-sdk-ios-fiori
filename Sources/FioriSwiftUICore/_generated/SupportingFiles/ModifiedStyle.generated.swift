@@ -8,6 +8,34 @@ public struct ModifiedStyle<Style, Modifier: ViewModifier>: DynamicProperty {
     var modifier: Modifier
 }
 
+// MARK: ActionStyle
+
+extension ModifiedStyle: ActionStyle where Style: ActionStyle {
+    public func makeBody(_ configuration: ActionConfiguration) -> some View {
+        Action(configuration)
+            .actionStyle(self.style)
+            .modifier(self.modifier)
+    }
+}
+
+public struct ActionStyleModifier<Style: ActionStyle>: ViewModifier {
+    let style: Style
+
+    public func body(content: Content) -> some View {
+        content.actionStyle(self.style)
+    }
+}
+
+public extension ActionStyle {
+    func modifier(_ modifier: some ViewModifier) -> some ActionStyle {
+        ModifiedStyle(style: self, modifier: modifier)
+    }
+
+    func concat(_ style: some ActionStyle) -> some ActionStyle {
+        style.modifier(ActionStyleModifier(style: self))
+    }
+}
+
 // MARK: AvatarsStyle
 
 extension ModifiedStyle: AvatarsStyle where Style: AvatarsStyle {
@@ -400,6 +428,34 @@ public extension FootnoteIconsStyle {
     }
 }
 
+// MARK: IconStyle
+
+extension ModifiedStyle: IconStyle where Style: IconStyle {
+    public func makeBody(_ configuration: IconConfiguration) -> some View {
+        Icon(configuration)
+            .iconStyle(self.style)
+            .modifier(self.modifier)
+    }
+}
+
+public struct IconStyleModifier<Style: IconStyle>: ViewModifier {
+    let style: Style
+
+    public func body(content: Content) -> some View {
+        content.iconStyle(self.style)
+    }
+}
+
+public extension IconStyle {
+    func modifier(_ modifier: some ViewModifier) -> some IconStyle {
+        ModifiedStyle(style: self, modifier: modifier)
+    }
+
+    func concat(_ style: some IconStyle) -> some IconStyle {
+        style.modifier(IconStyleModifier(style: self))
+    }
+}
+
 // MARK: IconsStyle
 
 extension ModifiedStyle: IconsStyle where Style: IconsStyle {
@@ -425,6 +481,34 @@ public extension IconsStyle {
 
     func concat(_ style: some IconsStyle) -> some IconsStyle {
         style.modifier(IconsStyleModifier(style: self))
+    }
+}
+
+// MARK: InformationViewStyle
+
+extension ModifiedStyle: InformationViewStyle where Style: InformationViewStyle {
+    public func makeBody(_ configuration: InformationViewConfiguration) -> some View {
+        InformationView(configuration)
+            .informationViewStyle(self.style)
+            .modifier(self.modifier)
+    }
+}
+
+public struct InformationViewStyleModifier<Style: InformationViewStyle>: ViewModifier {
+    let style: Style
+
+    public func body(content: Content) -> some View {
+        content.informationViewStyle(self.style)
+    }
+}
+
+public extension InformationViewStyle {
+    func modifier(_ modifier: some ViewModifier) -> some InformationViewStyle {
+        ModifiedStyle(style: self, modifier: modifier)
+    }
+
+    func concat(_ style: some InformationViewStyle) -> some InformationViewStyle {
+        style.modifier(InformationViewStyleModifier(style: self))
     }
 }
 
@@ -456,59 +540,31 @@ public extension MediaImageStyle {
     }
 }
 
-// MARK: NewActionStyle
+// MARK: ObjectItemStyle
 
-extension ModifiedStyle: NewActionStyle where Style: NewActionStyle {
-    public func makeBody(_ configuration: NewActionConfiguration) -> some View {
-        NewAction(configuration)
-            .newActionStyle(self.style)
+extension ModifiedStyle: ObjectItemStyle where Style: ObjectItemStyle {
+    public func makeBody(_ configuration: ObjectItemConfiguration) -> some View {
+        ObjectItem(configuration)
+            .objectItemStyle(self.style)
             .modifier(self.modifier)
     }
 }
 
-public struct NewActionStyleModifier<Style: NewActionStyle>: ViewModifier {
+public struct ObjectItemStyleModifier<Style: ObjectItemStyle>: ViewModifier {
     let style: Style
 
     public func body(content: Content) -> some View {
-        content.newActionStyle(self.style)
+        content.objectItemStyle(self.style)
     }
 }
 
-public extension NewActionStyle {
-    func modifier(_ modifier: some ViewModifier) -> some NewActionStyle {
+public extension ObjectItemStyle {
+    func modifier(_ modifier: some ViewModifier) -> some ObjectItemStyle {
         ModifiedStyle(style: self, modifier: modifier)
     }
 
-    func concat(_ style: some NewActionStyle) -> some NewActionStyle {
-        style.modifier(NewActionStyleModifier(style: self))
-    }
-}
-
-// MARK: NewObjectItemStyle
-
-extension ModifiedStyle: NewObjectItemStyle where Style: NewObjectItemStyle {
-    public func makeBody(_ configuration: NewObjectItemConfiguration) -> some View {
-        NewObjectItem(configuration)
-            .newObjectItemStyle(self.style)
-            .modifier(self.modifier)
-    }
-}
-
-public struct NewObjectItemStyleModifier<Style: NewObjectItemStyle>: ViewModifier {
-    let style: Style
-
-    public func body(content: Content) -> some View {
-        content.newObjectItemStyle(self.style)
-    }
-}
-
-public extension NewObjectItemStyle {
-    func modifier(_ modifier: some ViewModifier) -> some NewObjectItemStyle {
-        ModifiedStyle(style: self, modifier: modifier)
-    }
-
-    func concat(_ style: some NewObjectItemStyle) -> some NewObjectItemStyle {
-        style.modifier(NewObjectItemStyleModifier(style: self))
+    func concat(_ style: some ObjectItemStyle) -> some ObjectItemStyle {
+        style.modifier(ObjectItemStyleModifier(style: self))
     }
 }
 

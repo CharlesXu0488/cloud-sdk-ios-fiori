@@ -3,6 +3,22 @@
 import Foundation
 import SwiftUI
 
+// MARK: ActionStyle
+
+struct ResolvedActionStyle<Style: ActionStyle>: View {
+    let style: Style
+    let configuration: ActionConfiguration
+    var body: some View {
+        style.makeBody(configuration)
+    }
+}
+
+extension ActionStyle {
+    func resolve(configuration: ActionConfiguration) -> some View {
+        ResolvedActionStyle(style: self, configuration: configuration)
+    }
+}
+
 // MARK: AvatarsStyle
 
 struct ResolvedAvatarsStyle<Style: AvatarsStyle>: View {
@@ -227,6 +243,22 @@ extension FootnoteIconsStyle {
     }
 }
 
+// MARK: IconStyle
+
+struct ResolvedIconStyle<Style: IconStyle>: View {
+    let style: Style
+    let configuration: IconConfiguration
+    var body: some View {
+        self.style.makeBody(self.configuration)
+    }
+}
+
+extension IconStyle {
+    func resolve(configuration: IconConfiguration) -> some View {
+        ResolvedIconStyle(style: self, configuration: configuration)
+    }
+}
+
 // MARK: IconsStyle
 
 struct ResolvedIconsStyle<Style: IconsStyle>: View {
@@ -240,6 +272,22 @@ struct ResolvedIconsStyle<Style: IconsStyle>: View {
 extension IconsStyle {
     func resolve(configuration: IconsConfiguration) -> some View {
         ResolvedIconsStyle(style: self, configuration: configuration)
+    }
+}
+
+// MARK: InformationViewStyle
+
+struct ResolvedInformationViewStyle<Style: InformationViewStyle>: View {
+    let style: Style
+    let configuration: InformationViewConfiguration
+    var body: some View {
+        self.style.makeBody(self.configuration)
+    }
+}
+
+extension InformationViewStyle {
+    func resolve(configuration: InformationViewConfiguration) -> some View {
+        ResolvedInformationViewStyle(style: self, configuration: configuration)
     }
 }
 
@@ -259,35 +307,19 @@ extension MediaImageStyle {
     }
 }
 
-// MARK: NewActionStyle
+// MARK: ObjectItemStyle
 
-struct ResolvedNewActionStyle<Style: NewActionStyle>: View {
+struct ResolvedObjectItemStyle<Style: ObjectItemStyle>: View {
     let style: Style
-    let configuration: NewActionConfiguration
+    let configuration: ObjectItemConfiguration
     var body: some View {
         style.makeBody(configuration)
     }
 }
 
-extension NewActionStyle {
-    func resolve(configuration: NewActionConfiguration) -> some View {
-        ResolvedNewActionStyle(style: self, configuration: configuration)
-    }
-}
-
-// MARK: NewObjectItemStyle
-
-struct ResolvedNewObjectItemStyle<Style: NewObjectItemStyle>: View {
-    let style: Style
-    let configuration: NewObjectItemConfiguration
-    var body: some View {
-        style.makeBody(configuration)
-    }
-}
-
-extension NewObjectItemStyle {
-    func resolve(configuration: NewObjectItemConfiguration) -> some View {
-        ResolvedNewObjectItemStyle(style: self, configuration: configuration)
+extension ObjectItemStyle {
+    func resolve(configuration: ObjectItemConfiguration) -> some View {
+        ResolvedObjectItemStyle(style: self, configuration: configuration)
     }
 }
 
